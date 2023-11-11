@@ -5,62 +5,13 @@ import NoResult from "@/components/shared/NoResult";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
+import { getQuestions } from "@/lib/actions/question.action";
 import Link from "next/link";
 
-const questions = [
-  {
-    _id: "1", // Change to a string
-    title: "What is React, and why is it commonly used for web development?",
-    tags: [
-      { _id: "1", name: "python" }, // Change _id to a string
-      { _id: "2", name: "sql" }, // Change _id to a string
-    ],
-    author: {
-      _id: 1, // Keep as a number
-      name: "John Doe",
-      picture: "url/to/picture",
-    },
-    upvotes: 10,
-    views: 100,
-    answers: [],
-    createdAt: new Date("2021-09-01T12:00:00.000Z"), // Parse the date string
-  },
-  {
-    _id: "2", // Change to a string
-    title: "How to center a Div ?",
-    tags: [
-      { _id: "3", name: "html" }, // Change _id to a string
-      { _id: "4", name: "css" }, // Change _id to a string
-    ],
-    author: {
-      _id: 2, // Keep as a number
-      name: "Jane Smith",
-      picture: "url/to/picture",
-    },
-    upvotes: 5,
-    views: 50,
-    answers: [],
-    createdAt: new Date("2021-09-02T09:30:00.000Z"), // Parse the date string
-  },
-  {
-    _id: "1", // Change to a string
-    title: "What is React, and why is it commonly used for web development?",
-    tags: [
-      { _id: "1", name: "python" }, // Change _id to a string
-      { _id: "2", name: "sql" }, // Change _id to a string
-    ],
-    author: {
-      _id: 1, // Keep as a number
-      name: "John Doe",
-      picture: "url/to/picture",
-    },
-    upvotes: 10,
-    views: 100,
-    answers: [],
-    createdAt: new Date("2021-09-01T12:00:00.000Z"), // Parse the date string
-  },
-];
-export default function Home() {
+export default async function Home() {
+  const result = await getQuestions({});
+  // console.log(result.questions);
+
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
@@ -92,8 +43,8 @@ export default function Home() {
       <div className="mt-10 flex w-full flex-col gap-6 ">
         {/* looping through question  */}
 
-        {questions.length > 0 ? (
-          questions.map((question) => (
+        {result.questions.length > 0 ? (
+          result.questions.map((question) => (
             <QuestionCard
               key={question._id}
               _id={question._id}
