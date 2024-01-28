@@ -12,9 +12,6 @@ import {
 } from "./shared.types";
 import User from "@/database/user.model";
 import { revalidatePath } from "next/cache";
-import { Tags } from "lucide-react";
-import { model } from "mongoose";
-import path from "path";
 
 export async function getQuestions(params: GetQuestionsParams) {
   try {
@@ -61,6 +58,7 @@ export async function createQuestion(params: CreateQuestionParams) {
     revalidatePath(path);
   } catch (error) {}
 }
+
 export async function getQuestionById(params: GetQuestionByIdParams) {
   try {
     connectToDatabase();

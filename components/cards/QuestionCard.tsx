@@ -3,6 +3,8 @@ import React from "react";
 import RenderTag from "../shared/RenderTag";
 import Metric from "../shared/metric";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
+import ParseHTML from "../shared/ParseHTML";
+import { resourceLimits } from "worker_threads";
 interface QuestionProps {
   _id: string;
   tags: {
