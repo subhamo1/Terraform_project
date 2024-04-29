@@ -12,9 +12,9 @@ export interface IUser extends Document {
   portfolioWebsite?: string;
   reputation?: number;
   saved: Schema.Types.ObjectId[];
-  joinedAt: Date;
+  joinedAt: Date; 
 }
-
+ 
 const UserSchema = new Schema({
   clerkId: { type: String, required: true },
   name: { type: String, required: true },

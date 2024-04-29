@@ -12,7 +12,7 @@ export const connectToDatabase = async () => {
 
   if (isConnected) {
     return console.log("mongodb is already connected");
-  }
+  } 1
 
   try {
     await mongoose.connect(process.env.MONGODB_URL, {

@@ -1,3 +1,4 @@
+import Votes from '@/components/Votes';
 import Answer from '@/components/forms/Answer';
 import AllAnswers from '@/components/shared/AllAnswers';
 import ParseHTML from '@/components/shared/ParseHTML';
@@ -21,6 +22,7 @@ const Page = async ({ params }: any) => {
   }
 
   const result = await getQuestionById({ questionId: params.id });
+  console.log(result, "huaha")
 
   return (
     <>
@@ -40,7 +42,16 @@ const Page = async ({ params }: any) => {
             </p>
           </Link>
           <div className="flex justify-end">
-            {/* <Votes /> */}
+            <Votes
+              type="question"
+              itemId={JSON.stringify(result._id)}
+              userId={JSON.stringify(mongoUser._id)}
+              upvotes={result.upvotes.length}
+              downvotes={result.downvotes.length}
+              hasupVoted={result.upvotes.includes(mongoUser._id)}
+              hasdownVoted={result.downvotes.includes(mongoUser._id)}
+              hasSaved={mongoUser?.saved.includes(result._id)}
+            />
           </div>
         </div>
         <h2 className="h2-semibold text-dark200_light900 mt-3.5 w-full text-left">
@@ -88,7 +99,7 @@ const Page = async ({ params }: any) => {
 
       <AllAnswers
         questionId={result._id}
-        userId={JSON.stringify(mongoUser._id)}
+        userId={mongoUser._id}
         totalAnswers={result.answers.length}
       />
 

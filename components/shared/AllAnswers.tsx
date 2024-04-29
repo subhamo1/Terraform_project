@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import ParseHTML from './ParseHTML';
 import { getTimestamp } from '@/lib/utils';
+import Votes from '../Votes';
 
 
 interface Props {
@@ -20,6 +21,7 @@ const AllAnswers = async ({ questionId, totalAnswers, page, userId, filter }: Pr
     questionId,
   })
 
+
   return (
     <>
 
@@ -30,20 +32,20 @@ const AllAnswers = async ({ questionId, totalAnswers, page, userId, filter }: Pr
           <Filter filters={AnswerFilters} />
         </div>
         <div>
-          {result.answers.map((answer) => (
+          {result?.answers?.map((answer) => (
             <article key={answer._id} className='light-border border-b py-10'>
               <div className='mb-8 flex flex-col-reverse justify-between gap-5 sm:flex-row sm:items-center sm:gap-2'>
                 <Link href={`/profile/${answer.author.clerkId}`} className="flex flex-1 items-start gap-1 sm:items-center">
                   <Image
-                    src={answer.author.picture}
+                    src={answer?.author.picture}
                     width={18}
                     height={18}
                     alt="profile"
                     className="rounded-full object-cover max-sm:mt-0.5"
-                  />
+                  />s
                   <div className="flex flex-col sm:flex-row sm:items-center">
                     <p className="body-semibold text-dark300_light700">
-                      {answer.author.name}
+                      {answer?.author?.name}
                     </p>
 
                     <p className="small-regular text-light400_light500 ml-0.5 mt-0.5 line-clamp-1">
@@ -53,7 +55,15 @@ const AllAnswers = async ({ questionId, totalAnswers, page, userId, filter }: Pr
                   </div>
                 </Link>
                 <div className="flex justify-end">
-                  votes
+                  <Votes
+                    type="answer"
+                    itemId={JSON.stringify(answer._id)}
+                    userId={JSON.stringify(userId)}
+                    upvotes={answer.upvotes.length}
+                    downvotes={answer.downvotes.length}
+                    hasupVoted={answer.upvotes.includes(userId)}
+                    hasdownVoted={answer.downvotes.includes(userId)}
+                  />
                 </div>
 
               </div>
