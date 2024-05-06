@@ -66,7 +66,7 @@ export async function deleteUser(params: DeleteUserParams) {
     const { clerkId } = params;
 
     const user = await User.findOneAndDelete({ clerkId });
-
+    console.log(user, "testing", "user")
     if (!user) {
       throw new Error("User not found");
     }
@@ -74,14 +74,13 @@ export async function deleteUser(params: DeleteUserParams) {
     // const userQuestionIds = await Question.find({ author: user._id }).distinct(
     //   "_id"
     // );
-
     // delete user questions
 
-    await Question.deleteMany({ author: user._id });
+    await Question.deleteMany({ author: user?._id });
 
     // TODO : delete user answers, comments etc.
 
-    const deleteUser = await User.findByIdAndDelete(user._id);
+    const deleteUser = await User.findByIdAndDelete(user?._id);
     return deleteUser;
   } catch (error) {
     console.log(error);
