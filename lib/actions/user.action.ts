@@ -7,14 +7,11 @@ import {
   CreateUserParams,
   DeleteUserParams,
   GetAllUsersParams,
-  GetQuestionByIdParams,
   GetSavedQuestionsParams,
-  GetUserByIdParams,
   ToggleSaveQuestionParams,
   UpdateUserParams,
 } from "./shared.types";
 import { revalidatePath } from "next/cache";
-import console from "console";
 import Question from "@/database/question.model";
 import Tag from "@/database/tag.model";
 
@@ -69,7 +66,7 @@ export async function deleteUser(params: DeleteUserParams) {
     const { clerkId } = params;
 
     const user = await User.findOneAndDelete({ clerkId });
-
+    console.log(user, "testing", "user")
     if (!user) {
       throw new Error("User not found");
     }
@@ -77,14 +74,13 @@ export async function deleteUser(params: DeleteUserParams) {
     // const userQuestionIds = await Question.find({ author: user._id }).distinct(
     //   "_id"
     // );
-
     // delete user questions
 
-    await Question.deleteMany({ author: user._id });
+    await Question.deleteMany({ author: user?._id });
 
     // TODO : delete user answers, comments etc.
 
-    const deleteUser = await User.findByIdAndDelete(user._id);
+    const deleteUser = await User.findByIdAndDelete(user?._id);
     return deleteUser;
   } catch (error) {
     console.log(error);
@@ -95,7 +91,6 @@ export async function getAllUsers(params: GetAllUsersParams) {
   try {
     connectToDatabase();
 
-    const { page = 1, pageSize = 20, filter, ...searchQuery } = params;
     const users = await User.find({}).sort({ createdAt: -1 });
     return { users };
   } catch (error) {
@@ -145,7 +140,7 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
   try {
     await connectToDatabase();
 
-    const { clerkId, page = 1, pageSize = 10, filter, searchQuery } = params;
+    const { clerkId, searchQuery } = params;
 
     const query: FilterQuery<typeof Question> = searchQuery ?
       { title: { $regex: new RegExp(searchQuery, 'i') } } : {}

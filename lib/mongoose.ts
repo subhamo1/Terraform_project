@@ -1,7 +1,6 @@
+//eslint-disable-next-line
 import mongoose from "mongoose";
-
 let isConnected: boolean = false; // Changed 'const' to 'let' to reassign this variable
-
 export const connectToDatabase = async () => {
   mongoose.set("strictQuery", true);
   // this will prevent unknown field query
