@@ -1,4 +1,4 @@
-//eslint-disable-next-line
+// eslint-disable-next-line
 import mongoose from "mongoose";
 let isConnected: boolean = false; // Changed 'const' to 'let' to reassign this variable
 export const connectToDatabase = async () => {
