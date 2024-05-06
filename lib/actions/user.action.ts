@@ -60,28 +60,27 @@ export async function updateUser(params: UpdateUserParams) {
   }
 }
 
+
 export async function deleteUser(params: DeleteUserParams) {
   try {
     connectToDatabase();
+
     const { clerkId } = params;
 
     const user = await User.findOneAndDelete({ clerkId });
-    console.log(user, "testing", "user")
+
     if (!user) {
-      throw new Error("User not found");
+      throw new Error('User not found');
     }
 
-    // const userQuestionIds = await Question.find({ author: user._id }).distinct(
-    //   "_id"
-    // );
+    // Delete user from database
+    // and questions, answers, comments, etc.
+
+    // get user question ids
+    // const userQuestionIds = await Question.find({ author: user._id}).distinct('_id');
+
     // delete user questions
 
-    await Question.deleteMany({ author: user?._id });
-
-    // TODO : delete user answers, comments etc.
-
-    const deleteUser = await User.findByIdAndDelete(user?._id);
-    return deleteUser;
   } catch (error) {
     console.log(error);
     throw error;
