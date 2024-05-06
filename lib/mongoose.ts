@@ -1,21 +1,21 @@
-// eslint-disable-next-line
 import mongoose from "mongoose";
-let isConnected: boolean = false; // Changed 'const' to 'let' to reassign this variable
+
+let isConnected: boolean = false;
+
 export const connectToDatabase = async () => {
   mongoose.set("strictQuery", true);
-  // this will prevent unknown field query
 
   if (!process.env.MONGODB_URL) {
     return console.log("Missing MongoDB URL");
   }
 
   if (isConnected) {
-    return console.log("mongodb is already connected");
-  } 1
+    return console.log("MongoDB is already connected");
+  }
 
   try {
     await mongoose.connect(process.env.MONGODB_URL, {
-      dbName: "devflow", // name of the database
+      dbName: "devflow",
     });
 
     isConnected = true;
@@ -23,4 +23,6 @@ export const connectToDatabase = async () => {
   } catch (error) {
     console.log("Mongo DB connection failed", error);
   }
+
+  return; // Add this explicit return statement
 };
