@@ -30,7 +30,7 @@ export async function getQuestions(params: GetQuestionsParams) {
     return { questions };
   } catch (error) {
     console.log(error);
-    throw error;
+    throw error;    
   }
 }
 export async function createQuestion(params: CreateQuestionParams) {
@@ -40,7 +40,7 @@ export async function createQuestion(params: CreateQuestionParams) {
     const question = await Question.create({
       title,
       content,
-      author,
+      author, 
     });
 
     const tagDocuments = [];
@@ -55,6 +55,7 @@ export async function createQuestion(params: CreateQuestionParams) {
     }
 
 
+    
     await Question.findByIdAndUpdate(question._id, {
       $push: { tags: { $each: tagDocuments } },
     })
@@ -65,7 +66,7 @@ export async function createQuestion(params: CreateQuestionParams) {
 
 export async function getQuestionById(params: GetQuestionByIdParams) {
   try {
-    connectToDatabase();
+    connectToDatabase();  
 
     const { questionId } = params;
 

@@ -24,5 +24,4 @@ export const connectToDatabase = async () => {
     console.log("Mongo DB connection failed", error);
   }
 
-  return; // Add this explicit return statement
 };
