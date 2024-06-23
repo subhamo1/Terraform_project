@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    container_name: nextjs_app
+    env_file:
+      - .env.local
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app # Add this line to map the current directory to /app inside the container
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

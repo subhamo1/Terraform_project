@@ -8,7 +8,7 @@ const RightSidebar = () => {
     {
       _id: "1",
       title:
-        "What is Next.js, and how does it differ from traditional React applications?",
+        "What is Next.js, and explai the devops and tradional method for deployment?",
     },
     {
       _id: "2",
